@@ -1,0 +1,16 @@
+>> Model: resnet18, perturbation: results/imagenette_resnet18_500/universal_resnet18.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 5.47
+>> Validation images: data/imagenette2-320/val
+>> 3925 images
+
+                       précision   fooling rate
+  images propres          77.7 %         -
+  + v mélangé (témoin)    77.6 %        8.1 %
+  + pert. universelle     67.4 %       24.0 %
+
+>> Classes les plus prédites après perturbation :
+   church                           4.9 % des images trompées
+   shower curtain                   3.8 % des images trompées
+   paper towel                      2.3 % des images trompées
+   English springer                 2.1 % des images trompées
+   chain saw                        2.0 % des images trompées

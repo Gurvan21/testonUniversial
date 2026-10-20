@@ -1,0 +1,7 @@
+# Datasets, caches et résultats volumineux
+python/data/imagenette2-320/
+python/data/imagenet_data.pt
+python/data/universal_*.pt
+__pycache__/
+python/data/checkpoint_*.pt
+.vscode/

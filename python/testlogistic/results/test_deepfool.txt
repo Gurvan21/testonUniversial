@@ -1,0 +1,5 @@
+Model: resnet34, image: test_im1.jpg
+Original label = macaw
+Perturbed label = flamingo
+Iterations = 5
+||r|| / ||x|| = 0.0051

@@ -1,0 +1,16 @@
+>> Model: resnet50, perturbation: data/universal_resnet50.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 10.46
+>> Validation images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval
+>> 40000 images
+
+                       précision   fooling rate
+  images propres          80.5 %         -
+  + v mélangé (témoin)    78.8 %        9.5 %
+  + pert. universelle     17.1 %       81.0 %
+
+>> Classes les plus prédites après perturbation :
+   spider web                      97.5 % des images trompées
+   African elephant                 0.0 % des images trompées
+   grocery store                    0.0 % des images trompées
+   confectionery                    0.0 % des images trompées
+   toyshop                          0.0 % des images trompées

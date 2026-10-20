@@ -1,85 +1,50 @@
-import numpy as np
 import os
-from scipy.misc import imread, imresize
 
-CLASS_INDEX = None
-CLASS_INDEX_PATH = 'https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json'
+import torch
+from PIL import Image
+from torchvision import transforms
 
 
-def preprocess_image_batch(image_paths, img_size=None, crop_size=None, color_mode="rgb", out=None):
-    img_list = []
+def get_preprocess(img_size=(256, 256), crop_size=(224, 224)):
+    # Images are kept in [0, 1] RGB space; the ImageNet mean/std normalization
+    # is done inside the model (see demo.py), so perturbations live in pixel space.
+    return transforms.Compose([
+        transforms.Resize(img_size),
+        transforms.CenterCrop(crop_size),
+        transforms.ToTensor(),
+    ])
 
-    for im_path in image_paths:
-        img = imread(im_path, mode='RGB')
-        if img_size:
-            img = imresize(img,img_size)
 
-        img = img.astype('float32')
-        # We normalize the colors (in RGB space) with the empirical means on the training set
-        img[:, :, 0] -= 123.68
-        img[:, :, 1] -= 116.779
-        img[:, :, 2] -= 103.939
-        # We permute the colors to get them in the BGR order
-        # if color_mode=="bgr":
-        #    img[:,:,[0,1,2]] = img[:,:,[2,1,0]]
+def preprocess_image_batch(image_paths, img_size=(256, 256), crop_size=(224, 224)):
+    """
+    :param image_paths: list of image paths
+    :return: tensor of size Nx3xHxW with values in [0, 1]
+    """
+    preprocess = get_preprocess(img_size, crop_size)
+    return torch.stack([preprocess(Image.open(p).convert('RGB')) for p in image_paths])
 
-        if crop_size:
-            img = img[(img_size[0] - crop_size[0]) // 2:(img_size[0] + crop_size[0]) // 2, (img_size[1]-crop_size[1])//2:(img_size[1]+crop_size[1])//2, :];
 
-        img_list.append(img)
+def create_imagenet_data(path_train_imagenet, num_imgs_per_class=10, num_classes=1000):
+    """
+    Load num_imgs_per_class images from each class folder of the ImageNet training set.
 
-    try:
-        img_batch = np.stack(img_list, axis=0)
-    except:
-        raise ValueError('when img_size and crop_size are None, images'
-                ' in image_paths must have the same shapes.')
+    :param path_train_imagenet: path of the ImageNet training set (one sub-folder per class)
+    :return: tensor of size Mx3x224x224 with values in [0, 1]
+    """
+    # Sort the directories in alphabetical order (same as synset_words.txt)
+    dirs = sorted(d.path for d in os.scandir(path_train_imagenet) if d.is_dir())[:num_classes]
 
-    if out is not None and hasattr(out, 'append'):
-        out.append(img_batch)
-    else:
-        return img_batch
-
-def undo_image_avg(img):
-    img_copy = np.copy(img)
-    img_copy[:, :, 0] = img_copy[:, :, 0] + 123.68
-    img_copy[:, :, 1] = img_copy[:, :, 1] + 116.779
-    img_copy[:, :, 2] = img_copy[:, :, 2] + 103.939
-    return img_copy
-
-def create_imagenet_npy(path_train_imagenet, len_batch=10000):
-
-    # path_train_imagenet = '/datasets2/ILSVRC2012/train';
-
-    sz_img = [224, 224]
-    num_channels = 3
-    num_classes = 1000
-
-    im_array = np.zeros([len_batch] + sz_img + [num_channels], dtype=np.float32)
-    num_imgs_per_batch = int(len_batch / num_classes)
-
-    dirs = [x[0] for x in os.walk(path_train_imagenet)]
-    dirs = dirs[1:]
-
-    # Sort the directory in alphabetical order (same as synset_words.txt)
-    dirs = sorted(dirs)
-
-    it = 0
-    Matrix = [0 for x in range(1000)]
-
+    image_paths = []
     for d in dirs:
-        for _, _, filename in os.walk(os.path.join(path_train_imagenet, d)):
-            Matrix[it] = filename
-        it = it+1
+        files = sorted(f for f in os.listdir(d) if not f.startswith('.'))[:num_imgs_per_class]
+        image_paths += [os.path.join(d, f) for f in files]
 
+    preprocess = get_preprocess()
+    data = torch.empty(len(image_paths), 3, 224, 224)
 
-    it = 0
-    # Load images, pre-process, and save
-    for k in range(num_classes):
-        for u in range(num_imgs_per_batch):
-            print('Processing image number ', it)
-            path_img = os.path.join(dirs[k], Matrix[k][u])
-            image = preprocess_image_batch([path_img],img_size=(256,256), crop_size=(224,224), color_mode="rgb")
-            im_array[it:(it+1), :, :, :] = image
-            it = it + 1
+    # Load images and pre-process
+    for it, path_img in enumerate(image_paths):
+        print('Processing image number ', it)
+        data[it] = preprocess(Image.open(path_img).convert('RGB'))
 
-    return im_array
+    return data

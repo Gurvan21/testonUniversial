@@ -1,0 +1,5 @@
+Précision : 80.3 %
+Points attaqués : 803, trompés : 803
+Itérations moyennes : 1.00
+||r|| moyen : 1.184 (min 0.001, max 4.630)
+Écart max avec la distance exacte à la frontière : 2.92e-06
