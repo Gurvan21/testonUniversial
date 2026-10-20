@@ -45,7 +45,8 @@ Options:
 - `--num_imgs_per_class` (default 10)
 - `--cache`: file where the pre-processed images are cached (default `data/imagenet_data.pt`). Use one file per dataset, otherwise the cache of another dataset is reused.
 - `--max_iter_df`: maximum number of DeepFool iterations (default 10). The update is discarded when DeepFool does not converge; the number of discarded updates is printed after each pass.
-- `--checkpoint`: file where the computation is saved every 200 images and after each pass (default `data/checkpoint_<model>.pt`). If the computation is interrupted, relaunching the same command resumes it. The file is deleted at the end.
+- `-o`, `--perturbation`: file of the universal perturbation (default `data/universal_<model>.pt`). Use it to keep several perturbations of the same model (e.g. computed on different datasets).
+- `--checkpoint`: file where the computation is saved every 200 images and after each pass (default `data/checkpoint_<model>.pt`, or `<perturbation>_checkpoint.pt` with `-o`). If the computation is interrupted, relaunching the same command resumes it. The file is deleted at the end.
 
 ### Evaluating a universal perturbation
 

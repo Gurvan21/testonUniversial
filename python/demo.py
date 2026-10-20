@@ -48,8 +48,11 @@ if __name__ == '__main__':
                         help='file where the pre-processed training images are cached (one per dataset!)')
     parser.add_argument('--max_iter_df', type=int, default=10,
                         help='maximum number of DeepFool iterations; the update is discarded if DeepFool does not converge')
+    parser.add_argument('-o', '--perturbation', default=None,
+                        help='file of the universal perturbation, computed if it does not exist (default: data/universal_<model>.pt)')
     parser.add_argument('--checkpoint', default=None,
-                        help='file where the computation is saved regularly, to resume it if interrupted (default: data/checkpoint_<model>.pt)')
+                        help='file where the computation is saved regularly, to resume it if interrupted '
+                             '(default: data/checkpoint_<model>.pt, or <perturbation>_checkpoint.pt with -o)')
     args = parser.parse_args()
 
     device = get_device()
@@ -58,8 +61,8 @@ if __name__ == '__main__':
     print('>> Loading model', args.model)
     model, labels = load_model(args.model, device)
 
-    os.makedirs('data', exist_ok=True)
-    file_perturbation = os.path.join('data', 'universal_' + args.model + '.pt')
+    file_perturbation = args.perturbation or os.path.join('data', 'universal_' + args.model + '.pt')
+    os.makedirs(os.path.dirname(file_perturbation) or '.', exist_ok=True)
 
     if not os.path.isfile(file_perturbation):
 
@@ -80,7 +83,12 @@ if __name__ == '__main__':
             X = torch.load(datafile)
 
         # Running universal perturbation (resumed from the checkpoint if the computation was interrupted)
-        file_checkpoint = args.checkpoint or os.path.join('data', 'checkpoint_' + args.model + '.pt')
+        if args.checkpoint:
+            file_checkpoint = args.checkpoint
+        elif args.perturbation:
+            file_checkpoint = os.path.splitext(args.perturbation)[0] + '_checkpoint.pt'
+        else:
+            file_checkpoint = os.path.join('data', 'checkpoint_' + args.model + '.pt')
         v = universal_perturbation(X, model, delta=args.delta, xi=args.xi / 255, max_iter_df=args.max_iter_df,
                                   checkpoint=file_checkpoint)
 

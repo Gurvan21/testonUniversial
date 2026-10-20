@@ -5,3 +5,4 @@ python/data/universal_*.pt
 __pycache__/
 python/data/checkpoint_*.pt
 .vscode/
+python/**/*_checkpoint.pt
