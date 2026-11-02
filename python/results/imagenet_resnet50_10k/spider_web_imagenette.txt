@@ -1,0 +1,37 @@
+>> Model: resnet50, perturbation: results/imagenet_resnet50_10k/universal_resnet50.pt
+>> Images: data/imagenette2-320/val (3925 images)
+>> Class: "spider web" (index 815, synset n04275548)
+
+1. Images propres
+   images de cette classe dans le jeu :       0 sur 3925 (0.00 %)
+   images prédites dans cette classe :        0 (0.00 %)
+   probabilité moyenne de la classe :         0.0005 (uniforme : 0.0010)
+   rang médian de la classe :                 502 / 1000
+
+2. Images perturbées
+   images prédites dans cette classe :        3229 (82.3 %)
+   probabilité moyenne de la classe :         0.7235
+   rang médian de la classe :                 1 / 1000
+
+3. Proportion des images envoyées vers "spider web", selon leur vraie classe
+   classes qui résistent le mieux :
+     chain saw                       70.7 %
+     tench                           71.6 %
+     English springer                76.2 %
+     French horn                     76.4 %
+     gas pump                        80.0 %
+   classes les plus envoyées :
+     parachute                       98.7 %
+     cassette player                 92.7 %
+     garbage truck                   88.9 %
+     church                          85.6 %
+     golf ball                       82.7 %
+
+4. La perturbation seule, sur une image grise uniforme
+   gris +  0 x v : hook                      (p = 0.02)
+   gris +  1 x v : spider web                (p = 0.99)
+   gris +  2 x v : spider web                (p = 0.99)
+   gris +  5 x v : spider web                (p = 0.99)
+   gris + 10 x v : spider web                (p = 0.99)
+
+[exited with code 0]

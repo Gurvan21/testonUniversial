@@ -120,6 +120,8 @@ def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10
             if (k_idx + 1) % checkpoint_every == 0:
                 start = k_idx + 1
                 save_checkpoint()
+                print('>> Checkpoint at image %d / %d: DeepFool did not converge for %d of the %d images attacked'
+                      % (start, num_images, num_not_converged, num_deepfool))
 
         itr = itr + 1
         start, order = 0, None
