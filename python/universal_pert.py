@@ -21,20 +21,29 @@ def proj_lp(v, xi, p):
     return v
 
 
+def add_noise(x, noise_std):
+    # Gaussian noise of standard deviation noise_std (on the [0, 1] scale) added to the images, then clipped to [0, 1]:
+    # the random "defense" that the attacker takes into account with Expectation Over Transformation (EOT)
+    if noise_std == 0:
+        return x
+    return (x + noise_std * torch.randn_like(x)).clamp(0, 1)
+
+
 @torch.no_grad()
-def predict_labels(dataset, model, v=None, batch_size=100):
-    # Compute the estimated labels in batches
+def predict_labels(dataset, model, v=None, batch_size=100, noise_std=0):
+    # Compute the estimated labels in batches (with an independent noise for each image if noise_std > 0)
     device = next(model.parameters()).device
     labels = []
     for m in range(0, dataset.shape[0], batch_size):
         batch = dataset[m:m + batch_size].to(device)
         if v is not None:
             batch = batch + v
-        labels.append(model(batch).argmax(dim=1).cpu())
+        labels.append(model(add_noise(batch, noise_std)).argmax(dim=1).cpu())
     return torch.cat(labels)
 
 
-def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10/255, p=np.inf, num_classes=10, overshoot=0.02, max_iter_df=10, batch_size=100, checkpoint=None, checkpoint_every=200):
+def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10/255, p=np.inf, num_classes=10, overshoot=0.02, max_iter_df=10, batch_size=100, checkpoint=None, checkpoint_every=200,
+                           noise_std=0, eot_samples=1):
     """
     :param dataset: Images tensor of size Mx3xHxW, values in [0, 1] (M: number of images)
 
@@ -60,6 +69,13 @@ def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10
         every checkpoint_every images and at the end of each pass. If it exists, the computation resumes from it.
 
     :param checkpoint_every: number of images between two checkpoints (default = 200)
+
+    :param noise_std: if > 0, the perturbation is computed against a defense that adds a Gaussian noise of this standard
+        deviation (on the [0, 1] scale) to each image, with Expectation Over Transformation (EOT): an image counts as
+        fooled if most of eot_samples noisy versions are fooled, DeepFool is run on eot_samples noisy versions of x + v
+        and the steps are averaged, and the fooling rate is measured with the noise (default = 0, no defense)
+
+    :param eot_samples: number of noise samples used for EOT (default = 1)
 
     :return: the universal perturbation, tensor of size 1x3xHxW.
     """
@@ -98,21 +114,32 @@ def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10
             cur_img = dataset[k:(k + 1)].to(device)
 
             with torch.no_grad():
-                not_fooled = model(cur_img).argmax() == model(cur_img + v).argmax()
+                label = model(cur_img).argmax()
+                if noise_std == 0:
+                    not_fooled = label == model(cur_img + v).argmax()
+                else:
+                    # EOT: fooled if the majority of the noisy versions are fooled
+                    noisy = add_noise((cur_img + v).repeat(eot_samples, 1, 1, 1), noise_std)
+                    not_fooled = (model(noisy).argmax(dim=1) == label).float().mean() >= 0.5
 
             if not_fooled:
                 print('>> k = ', k_idx, ', pass #', itr)
 
-                # Compute adversarial perturbation
-                dr, iter, _, _, _ = deepfool((cur_img + v)[0], model, num_classes=num_classes, overshoot=overshoot, max_iter=max_iter_df)
-                dr = torch.from_numpy(dr).to(device)
-                num_deepfool += 1
+                # Compute adversarial perturbation (EOT: on several noisy versions, and average the converged steps)
+                steps = []
+                for _ in range(eot_samples if noise_std > 0 else 1):
+                    dr, iter, _, _, _ = deepfool(add_noise(cur_img + v, noise_std)[0], model, num_classes=num_classes,
+                                                 overshoot=overshoot, max_iter=max_iter_df)
+                    num_deepfool += 1
 
-                # Make sure it converged...
-                if iter >= max_iter_df - 1:
-                    num_not_converged += 1
-                else:
-                    v = v + dr
+                    # Make sure it converged...
+                    if iter >= max_iter_df - 1:
+                        num_not_converged += 1
+                    else:
+                        steps.append(torch.from_numpy(dr).to(device))
+
+                if steps:
+                    v = v + torch.stack(steps).mean(dim=0)
 
                     # Project on l_p ball
                     v = proj_lp(v, xi, p)
@@ -127,11 +154,83 @@ def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10
         start, order = 0, None
 
         # Compute the fooling rate on the perturbed dataset
-        est_labels_pert = predict_labels(dataset, model, v=v, batch_size=batch_size)
+        est_labels_pert = predict_labels(dataset, model, v=v, batch_size=batch_size, noise_std=noise_std)
         fooling_rate = (est_labels_pert != est_labels_orig).float().mean().item()
-        print('FOOLING RATE = ', fooling_rate)
+        print('FOOLING RATE = ', fooling_rate, '(with noise std %.1f/255)' % (noise_std * 255) if noise_std > 0 else '')
         # (counted since the start of the pass, or since the resumption)
-        print('>> DeepFool did not converge (update discarded) for %d of the %d images attacked' % (num_not_converged, num_deepfool))
+        print('>> DeepFool did not converge (update discarded) for %d of the %d DeepFool runs' % (num_not_converged, num_deepfool))
         save_checkpoint()
 
     return v
+
+
+def universal_perturbation_sgd(dataset, model, delta=0.2, xi=10/255, p=np.inf, noise_std=0, eot_samples=1, epochs=10,
+                               batch_size=32, step=None, loss_clip=None, eval_batch_size=100, checkpoint=None):
+    """
+    Gradient-based universal perturbation (as the "SGD" baseline of Xu & Singh, ICML 2024, and the SGD UAP of
+    Shafahi et al., AAAI 2020), with Expectation Over Transformation against a Gaussian noise defense.
+
+    At each step, the cross-entropy with the original labels is averaged over a batch of images AND over eot_samples
+    noisy versions of each image, and v moves in the direction that increases it (sign of the gradient for p = Inf),
+    then is projected on the l_p ball of radius xi. Unlike the DeepFool-based algorithm, it does not stop pushing an
+    image once it is fooled, which gives margin to the perturbation.
+
+    :param dataset: Images tensor of size Mx3xHxW, values in [0, 1]
+    :param model: PyTorch classifier in eval mode (outputs logits)
+    :param delta: stops when the fooling rate (measured with the noise) reaches 1 - delta, or after epochs passes
+    :param xi, p: radius and norm of the perturbation (p = 2 or np.inf)
+    :param noise_std: standard deviation of the Gaussian noise of the defense, on the [0, 1] scale (0 = no defense)
+    :param eot_samples: number of noise samples per image at each step
+    :param epochs: maximum number of passes over the dataset
+    :param batch_size: number of images per step (each repeated eot_samples times)
+    :param step: step size (default xi / 10)
+    :param loss_clip: optional maximum of the per-image loss, so that already fooled images stop dominating (Shafahi et al.)
+    :param checkpoint: optional file saved after each pass; if it exists, the computation resumes from it
+    :return: the universal perturbation, tensor of size 1x3xHxW
+    """
+    device = next(model.parameters()).device
+    step = xi / 10 if step is None else step
+    num_images = dataset.shape[0]
+    v = torch.zeros((1,) + tuple(dataset.shape[1:]), device=device)
+    epoch, fooling_rate = 0, 0.0
+
+    if checkpoint is not None and os.path.isfile(checkpoint):
+        state = torch.load(checkpoint)
+        v, epoch, fooling_rate = state['v'].to(device), state['epoch'], state['fooling_rate']
+        print('>> Resuming from', checkpoint, ': epoch', epoch, ', fooling rate', fooling_rate)
+
+    est_labels_orig = predict_labels(dataset, model, batch_size=eval_batch_size)
+    m = eot_samples if noise_std > 0 else 1
+
+    while fooling_rate < 1 - delta and epoch < epochs:
+        print('Starting epoch ', epoch)
+        order = torch.randperm(num_images)
+        for b in range(0, num_images, batch_size):
+            idx = order[b:b + batch_size]
+            x = dataset[idx].to(device).repeat(m, 1, 1, 1)
+            y = est_labels_orig[idx].to(device).repeat(m)
+
+            v.requires_grad_(True)
+            logits = model(add_noise(x + v, noise_std))
+            loss = torch.nn.functional.cross_entropy(logits, y, reduction='none')
+            if loss_clip is not None:
+                loss = loss.clamp(max=loss_clip)
+            grad, = torch.autograd.grad(loss.mean(), v)
+
+            with torch.no_grad():
+                if p == np.inf:
+                    v = v + step * grad.sign()
+                else:
+                    v = v + step * grad / (grad.norm() + 1e-12)
+                v = proj_lp(v, xi, p)
+
+        epoch += 1
+        est_labels_pert = predict_labels(dataset, model, v=v, batch_size=eval_batch_size, noise_std=noise_std)
+        fooling_rate = (est_labels_pert != est_labels_orig).float().mean().item()
+        print('FOOLING RATE = ', fooling_rate, '(with noise std %.1f/255)' % (noise_std * 255) if noise_std > 0 else '')
+
+        if checkpoint is not None:
+            torch.save({'v': v.detach().cpu(), 'epoch': epoch, 'fooling_rate': fooling_rate}, checkpoint + '.tmp')
+            os.replace(checkpoint + '.tmp', checkpoint)
+
+    return v.detach()

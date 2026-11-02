@@ -48,6 +48,23 @@ Options:
 - `-o`, `--perturbation`: file of the universal perturbation (default `data/universal_<model>.pt`). Use it to keep several perturbations of the same model (e.g. computed on different datasets).
 - `--checkpoint`: file where the computation is saved every 200 images and after each pass (default `data/checkpoint_<model>.pt`, or `<perturbation>_checkpoint.pt` with `-o`). If the computation is interrupted, relaunching the same command resumes it. The file is deleted at the end.
 
+### Universal perturbation against a noise defense (EOT)
+
+A defender can add a Gaussian noise to each image before the prediction (see `eval_noise.py`). An attacker who knows it
+computes the universal perturbation with Expectation Over Transformation (EOT), i.e. on noisy versions of the images:
+```
+# Algorithm of the paper (DeepFool steps), with EOT: DeepFool on 4 noisy versions of each image, steps averaged
+python demo.py -m resnet50 -t <images> --noise_std 20 --eot_samples 4 --max_passes 5 -o results/eot/universal_resnet50_df_eot20.pt
+
+# Gradient-based universal perturbation (as the SGD baseline of Xu & Singh 2024), with EOT
+python demo.py -m resnet50 -t <images> --algo sgd --noise_std 20 --eot_samples 4 --epochs 10 -o results/eot/universal_resnet50_sgd_eot20.pt
+
+# Fooling rate and accuracy under the noise defense
+python eval_noise.py -m resnet50 -p results/eot/universal_resnet50_sgd_eot20.pt --sigmas 0,10,20,40
+```
+`--noise_std` is on the [0, 255] scale (0 = no defense, the original algorithm). With `--algo sgd`, `--sgd_batch_size` × `--eot_samples`
+images are processed at once on the GPU: on a 2 GB GPU, use e.g. `--sgd_batch_size 4 --eot_samples 4`.
+
 ### Evaluating a universal perturbation
 
 ```

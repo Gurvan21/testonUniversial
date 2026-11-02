@@ -8,7 +8,7 @@ from torch import nn
 from torchvision import transforms
 
 from prepare_imagenet_data import preprocess_image_batch, create_imagenet_data
-from universal_pert import universal_perturbation
+from universal_pert import universal_perturbation, universal_perturbation_sgd
 
 
 def get_device():
@@ -53,6 +53,18 @@ if __name__ == '__main__':
     parser.add_argument('--checkpoint', default=None,
                         help='file where the computation is saved regularly, to resume it if interrupted '
                              '(default: data/checkpoint_<model>.pt, or <perturbation>_checkpoint.pt with -o)')
+    parser.add_argument('--algo', choices=['deepfool', 'sgd'], default='deepfool',
+                        help='deepfool: algorithm of the paper (aggregation of DeepFool steps); '
+                             'sgd: gradient ascent on the loss averaged over images (and noise samples)')
+    parser.add_argument('--noise_std', type=float, default=0,
+                        help='EOT against a Gaussian noise defense of this standard deviation, on the [0, 255] scale (0 = no EOT)')
+    parser.add_argument('--eot_samples', type=int, default=4, help='number of noise samples per image for EOT')
+    parser.add_argument('--max_passes', type=int, default=None,
+                        help='deepfool: maximum number of passes (default: until the fooling rate reaches 1 - delta)')
+    parser.add_argument('--epochs', type=int, default=10, help='sgd: maximum number of passes over the images')
+    parser.add_argument('--sgd_batch_size', type=int, default=32,
+                        help='sgd: number of images per step (x eot_samples images on the GPU: lower it on small GPUs)')
+    parser.add_argument('--step', type=float, default=None, help='sgd: step size on the [0, 255] scale (default xi / 10)')
     args = parser.parse_args()
 
     device = get_device()
@@ -89,8 +101,18 @@ if __name__ == '__main__':
             file_checkpoint = os.path.splitext(args.perturbation)[0] + '_checkpoint.pt'
         else:
             file_checkpoint = os.path.join('data', 'checkpoint_' + args.model + '.pt')
-        v = universal_perturbation(X, model, delta=args.delta, xi=args.xi / 255, max_iter_df=args.max_iter_df,
-                                  checkpoint=file_checkpoint)
+        if args.noise_std > 0:
+            print('>> EOT against a Gaussian noise of std %.1f/255, %d samples' % (args.noise_std, args.eot_samples))
+        if args.algo == 'deepfool':
+            v = universal_perturbation(X, model, delta=args.delta, xi=args.xi / 255, max_iter_df=args.max_iter_df,
+                                       max_iter_uni=args.max_passes or float('inf'), checkpoint=file_checkpoint, noise_std=args.noise_std / 255,
+                                       eot_samples=args.eot_samples)
+        else:
+            v = universal_perturbation_sgd(X, model, delta=args.delta, xi=args.xi / 255, noise_std=args.noise_std / 255,
+                                           eot_samples=args.eot_samples, epochs=args.epochs,
+                                           batch_size=args.sgd_batch_size,
+                                           step=None if args.step is None else args.step / 255,
+                                           checkpoint=file_checkpoint)
 
         # Saving the universal perturbation; the checkpoint is no longer needed
         torch.save(v.cpu(), file_perturbation)
