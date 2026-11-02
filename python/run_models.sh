@@ -11,6 +11,8 @@
 set -o pipefail
 cd "$(dirname "$0")"
 export MPLBACKEND=Agg
+# Print the output of python immediately (otherwise it is buffered when piped to tee)
+export PYTHONUNBUFFERED=1
 
 D=${DATA_DIR:-/Data/gurvan.nkouathio-kemnhou}
 MAX_ITER_DF=${MAX_ITER_DF:-10}
