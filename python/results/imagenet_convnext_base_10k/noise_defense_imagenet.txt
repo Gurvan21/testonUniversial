@@ -1,0 +1,17 @@
+>> Model: convnext_base, perturbation: results/imagenet_convnext_base_10k/universal_convnext_base.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: brain coral
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  E = photos attaquées + bruit classées "brain coral"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          D          E
+         0         84.5 %     16.3 %     81.8 %     81.8 %     80.2 %
+         5         83.5 %     24.9 %     72.2 %     72.5 %     70.1 %
+        10         82.2 %     66.2 %     24.7 %     27.7 %     18.5 %
+        20         78.9 %     77.8 %      7.8 %     15.7 %      0.1 %
+        40         67.3 %     66.8 %     16.5 %     29.0 %      0.1 %

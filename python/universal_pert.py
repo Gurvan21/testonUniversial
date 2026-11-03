@@ -165,7 +165,8 @@ def universal_perturbation(dataset, model, delta=0.2, max_iter_uni=np.inf, xi=10
 
 
 def universal_perturbation_sgd(dataset, model, delta=0.2, xi=10/255, p=np.inf, noise_std=0, eot_samples=1, epochs=10,
-                               batch_size=32, step=None, loss_clip=None, eval_batch_size=100, checkpoint=None):
+                               batch_size=32, step=None, loss_clip=None, target=None, eval_batch_size=100,
+                               checkpoint=None):
     """
     Gradient-based universal perturbation (as the "SGD" baseline of Xu & Singh, ICML 2024, and the SGD UAP of
     Shafahi et al., AAAI 2020), with Expectation Over Transformation against a Gaussian noise defense.
@@ -183,8 +184,10 @@ def universal_perturbation_sgd(dataset, model, delta=0.2, xi=10/255, p=np.inf, n
     :param eot_samples: number of noise samples per image at each step
     :param epochs: maximum number of passes over the dataset
     :param batch_size: number of images per step (each repeated eot_samples times)
-    :param step: step size (default xi / 10)
+    :param step: step size (default xi / 10), divided by 2 at half and by 4 at three quarters of the epochs
     :param loss_clip: optional maximum of the per-image loss, so that already fooled images stop dominating (Shafahi et al.)
+    :param target: optional class index: targeted attack, v decreases the cross-entropy with this class instead of
+        increasing the one with the original labels (the fooling rate is still measured against the original labels)
     :param checkpoint: optional file saved after each pass; if it exists, the computation resumes from it
     :return: the universal perturbation, tensor of size 1x3xHxW
     """
@@ -204,6 +207,8 @@ def universal_perturbation_sgd(dataset, model, delta=0.2, xi=10/255, p=np.inf, n
 
     while fooling_rate < 1 - delta and epoch < epochs:
         print('Starting epoch ', epoch)
+        # Smaller steps at the end, so that v settles instead of oscillating around the optimum
+        cur_step = step * (1 if epoch < epochs / 2 else 0.5 if epoch < 3 * epochs / 4 else 0.25)
         order = torch.randperm(num_images)
         for b in range(0, num_images, batch_size):
             idx = order[b:b + batch_size]
@@ -212,22 +217,27 @@ def universal_perturbation_sgd(dataset, model, delta=0.2, xi=10/255, p=np.inf, n
 
             v.requires_grad_(True)
             logits = model(add_noise(x + v, noise_std))
-            loss = torch.nn.functional.cross_entropy(logits, y, reduction='none')
+            if target is None:
+                loss = torch.nn.functional.cross_entropy(logits, y, reduction='none')
+            else:
+                loss = -torch.nn.functional.cross_entropy(logits, torch.full_like(y, target), reduction='none')
             if loss_clip is not None:
                 loss = loss.clamp(max=loss_clip)
             grad, = torch.autograd.grad(loss.mean(), v)
 
             with torch.no_grad():
                 if p == np.inf:
-                    v = v + step * grad.sign()
+                    v = v + cur_step * grad.sign()
                 else:
-                    v = v + step * grad / (grad.norm() + 1e-12)
+                    v = v + cur_step * grad / (grad.norm() + 1e-12)
                 v = proj_lp(v, xi, p)
 
         epoch += 1
         est_labels_pert = predict_labels(dataset, model, v=v, batch_size=eval_batch_size, noise_std=noise_std)
         fooling_rate = (est_labels_pert != est_labels_orig).float().mean().item()
         print('FOOLING RATE = ', fooling_rate, '(with noise std %.1f/255)' % (noise_std * 255) if noise_std > 0 else '')
+        if target is not None:
+            print('>> Images classified as the target:', (est_labels_pert == target).float().mean().item())
 
         if checkpoint is not None:
             torch.save({'v': v.detach().cpu(), 'epoch': epoch, 'fooling_rate': fooling_rate}, checkpoint + '.tmp')

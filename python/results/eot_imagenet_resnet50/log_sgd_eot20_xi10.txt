@@ -1,0 +1,97 @@
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+Starting epoch  0
+FOOLING RATE =  0.24570000171661377 (with noise std 20.0/255)
+Starting epoch  1
+FOOLING RATE =  0.24269999563694 (with noise std 20.0/255)
+Starting epoch  2
+FOOLING RATE =  0.24040000140666962 (with noise std 20.0/255)
+Starting epoch  3
+FOOLING RATE =  0.24619999527931213 (with noise std 20.0/255)
+Starting epoch  4
+FOOLING RATE =  0.2425999939441681 (with noise std 20.0/255)
+Starting epoch  5
+FOOLING RATE =  0.24220000207424164 (with noise std 20.0/255)
+Starting epoch  6
+FOOLING RATE =  0.24449999630451202 (with noise std 20.0/255)
+Starting epoch  7
+FOOLING RATE =  0.2476000040769577 (with noise std 20.0/255)
+Starting epoch  8
+FOOLING RATE =  0.24819999933242798 (with noise std 20.0/255)
+Starting epoch  9
+FOOLING RATE =  0.24500000476837158 (with noise std 20.0/255)
+Starting epoch  10
+FOOLING RATE =  0.25769999623298645 (with noise std 20.0/255)
+Starting epoch  11
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+>> Resuming from results/eot_imagenet_resnet50/sgd_eot20_xi10_checkpoint.pt : epoch 11 , fooling rate 0.25769999623298645
+Starting epoch  11
+Traceback (most recent call last):
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/universal/python/demo.py", line 119, in <module>
+    v = universal_perturbation_sgd(X, model, delta=args.delta, xi=args.xi / 255, noise_std=args.noise_std / 255,
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/universal/python/universal_pert.py", line 219, in universal_perturbation_sgd
+    logits = model(add_noise(x + v, noise_std))
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/container.py", line 244, in forward
+    input = module(input)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torchvision/models/resnet.py", line 285, in forward
+    return self._forward_impl(x)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torchvision/models/resnet.py", line 273, in _forward_impl
+    x = self.layer1(x)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/container.py", line 244, in forward
+    input = module(input)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torchvision/models/resnet.py", line 158, in forward
+    identity = self.downsample(x)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/container.py", line 244, in forward
+    input = module(input)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/batchnorm.py", line 193, in forward
+    return F.batch_norm(
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/functional.py", line 2817, in batch_norm
+    return torch.batch_norm(
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 392.00 MiB. GPU 0 has a total capacity of 15.58 GiB of which 205.38 MiB is free. Process 193326 has 11.80 GiB memory in use. Including non-PyTorch memory, this process has 3.43 GiB memory in use. Of the allocated memory 2.98 GiB is allocated by PyTorch, and 265.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+FOOLING RATE =  0.2648000121116638 (with noise std 20.0/255)
+Starting epoch  12
+FOOLING RATE =  0.2824000120162964 (with noise std 20.0/255)
+Starting epoch  13
+FOOLING RATE =  0.31209999322891235 (with noise std 20.0/255)
+Starting epoch  14
+FOOLING RATE =  0.3479999899864197 (with noise std 20.0/255)
+Starting epoch  15
+FOOLING RATE =  0.3977999985218048 (with noise std 20.0/255)
+Starting epoch  16
+FOOLING RATE =  0.4318000078201294 (with noise std 20.0/255)
+Starting epoch  17
+FOOLING RATE =  0.4553999900817871 (with noise std 20.0/255)
+Starting epoch  18
+FOOLING RATE =  0.47530001401901245 (with noise std 20.0/255)
+Starting epoch  19
+FOOLING RATE =  0.4986000061035156 (with noise std 20.0/255)
+>> Testing the universal perturbation on an image

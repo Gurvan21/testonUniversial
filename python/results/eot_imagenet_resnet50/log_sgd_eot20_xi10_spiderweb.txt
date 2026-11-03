@@ -1,0 +1,66 @@
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+>> Targeted attack towards class 815 (spider web)
+Starting epoch  0
+FOOLING RATE =  0.23520000278949738 (with noise std 20.0/255)
+>> Images classified as the target: 0.007499999832361937
+Starting epoch  1
+FOOLING RATE =  0.33390000462532043 (with noise std 20.0/255)
+>> Images classified as the target: 0.1445000022649765
+Starting epoch  2
+FOOLING RATE =  0.3831000030040741 (with noise std 20.0/255)
+>> Images classified as the target: 0.2092999964952469
+Starting epoch  3
+FOOLING RATE =  0.39899998903274536 (with noise std 20.0/255)
+>> Images classified as the target: 0.2232999950647354
+Starting epoch  4
+FOOLING RATE =  0.40720000863075256 (with noise std 20.0/255)
+>> Images classified as the target: 0.23770000040531158
+Starting epoch  5
+FOOLING RATE =  0.41839998960494995 (with noise std 20.0/255)
+>> Images classified as the target: 0.25200000405311584
+Starting epoch  6
+FOOLING RATE =  0.41920000314712524 (with noise std 20.0/255)
+>> Images classified as the target: 0.25290000438690186
+Starting epoch  7
+FOOLING RATE =  0.4300000071525574 (with noise std 20.0/255)
+>> Images classified as the target: 0.26460000872612
+Starting epoch  8
+FOOLING RATE =  0.42489999532699585 (with noise std 20.0/255)
+>> Images classified as the target: 0.2623000144958496
+Starting epoch  9
+FOOLING RATE =  0.4352000057697296 (with noise std 20.0/255)
+>> Images classified as the target: 0.2720000147819519
+Starting epoch  10
+FOOLING RATE =  0.46880000829696655 (with noise std 20.0/255)
+>> Images classified as the target: 0.30640000104904175
+Starting epoch  11
+FOOLING RATE =  0.4772000014781952 (with noise std 20.0/255)
+>> Images classified as the target: 0.3172999918460846
+Starting epoch  12
+FOOLING RATE =  0.48500001430511475 (with noise std 20.0/255)
+>> Images classified as the target: 0.3237000107765198
+Starting epoch  13
+FOOLING RATE =  0.4957999885082245 (with noise std 20.0/255)
+>> Images classified as the target: 0.33629998564720154
+Starting epoch  14
+FOOLING RATE =  0.5084999799728394 (with noise std 20.0/255)
+>> Images classified as the target: 0.353300005197525
+Starting epoch  15
+FOOLING RATE =  0.531499981880188 (with noise std 20.0/255)
+>> Images classified as the target: 0.3815000057220459
+Starting epoch  16
+FOOLING RATE =  0.5397999882698059 (with noise std 20.0/255)
+>> Images classified as the target: 0.3889999985694885
+Starting epoch  17
+FOOLING RATE =  0.5436000227928162 (with noise std 20.0/255)
+>> Images classified as the target: 0.39169999957084656
+Starting epoch  18
+FOOLING RATE =  0.5418000221252441 (with noise std 20.0/255)
+>> Images classified as the target: 0.3955000042915344
+Starting epoch  19
+FOOLING RATE =  0.5407000184059143 (with noise std 20.0/255)
+>> Images classified as the target: 0.3968000113964081
+>> Testing the universal perturbation on an image

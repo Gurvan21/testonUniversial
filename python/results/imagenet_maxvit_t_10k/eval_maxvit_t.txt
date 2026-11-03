@@ -1,0 +1,16 @@
+>> Model: maxvit_t, perturbation: data/universal_maxvit_t.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 9.07
+>> Validation images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval
+>> 40000 images
+
+                       précision   fooling rate
+  images propres          83.5 %         -
+  + v mélangé (témoin)    82.6 %        5.9 %
+  + pert. universelle     23.0 %       74.9 %
+
+>> Classes les plus prédites après perturbation :
+   brain coral                     98.9 % des images trompées
+   teddy                            0.0 % des images trompées
+   grocery store                    0.0 % des images trompées
+   mongoose                         0.0 % des images trompées
+   ringneck snake                   0.0 % des images trompées

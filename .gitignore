@@ -6,3 +6,4 @@ __pycache__/
 python/data/checkpoint_*.pt
 .vscode/
 python/**/*_checkpoint.pt
+python/data/cache_*.pt

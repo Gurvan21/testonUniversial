@@ -1,0 +1,20 @@
+   batch 1 / 40   batch 2 / 40   batch 3 / 40   batch 4 / 40   batch 5 / 40   batch 6 / 40   batch 7 / 40   batch 8 / 40   batch 9 / 40   batch 10 / 40   batch 11 / 40   batch 12 / 40   batch 13 / 40   batch 14 / 40   batch 15 / 40   batch 16 / 40   batch 17 / 40   batch 18 / 40   batch 19 / 40   batch 20 / 40   batch 21 / 40   batch 22 / 40   batch 23 / 40   batch 24 / 40   batch 25 / 40   batch 26 / 40   batch 27 / 40   batch 28 / 40   batch 29 / 40   batch 30 / 40   batch 31 / 40   batch 32 / 40   batch 33 / 40   batch 34 / 40   batch 35 / 40   batch 36 / 40   batch 37 / 40   batch 38 / 40   batch 39 / 40   batch 40 / 40
+>> Model: resnet50, perturbation: results/imagenet_resnet50_10k/universal_resnet50.pt
+>> Images: data/imagenette2-320/val (1000 images)
+>> Dominant label of the perturbation: spider web
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  E = photos attaquées + bruit classées "spider web"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          D          E
+         0         85.1 %     15.1 %     84.8 %     84.8 %     83.1 %
+         2         87.5 %     16.6 %     82.7 %     83.2 %     81.4 %
+         5         87.1 %     24.1 %     75.0 %     75.1 %     72.5 %
+        10         84.2 %     53.7 %     42.5 %     45.2 %     37.7 %
+        20         80.6 %     77.0 %     10.5 %     20.0 %      0.1 %
+        40         57.0 %     56.4 %     26.4 %     41.9 %      0.0 %
+>> Results saved in results/imagenet_resnet50_10k/noise_defense_imagenette.txt

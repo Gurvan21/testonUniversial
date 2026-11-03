@@ -1,0 +1,221 @@
+=== sgd_xi10 : déjà calculée, on passe ===
+=== sgd_eot20_xi10 : calcul de la perturbation (Tue Nov  3 11:35:27 AM CET 2026) ===
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+>> Resuming from results/eot_imagenet_resnet50/sgd_eot20_xi10_checkpoint.pt : epoch 11 , fooling rate 0.25769999623298645
+Starting epoch  11
+Traceback (most recent call last):
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/universal/python/demo.py", line 119, in <module>
+    v = universal_perturbation_sgd(X, model, delta=args.delta, xi=args.xi / 255, noise_std=args.noise_std / 255,
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/universal/python/universal_pert.py", line 219, in universal_perturbation_sgd
+    logits = model(add_noise(x + v, noise_std))
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/users/eleves-b/2024/gurvan.nkouathio-kemnhou/venv-universal/lib64/python3.9/site-packages/torch/nn/modules/container.py", line 244, in forwaFOOLING RATE =  0.2648000121116638 (with noise std 20.0/255)
+Starting epoch  12
+FOOLING RATE =  0.2824000120162964 (with noise std 20.0/255)
+Starting epoch  13
+FOOLING RATE =  0.31209999322891235 (with noise std 20.0/255)
+Starting epoch  14
+FOOLING RATE =  0.3479999899864197 (with noise std 20.0/255)
+Starting epoch  15
+FOOLING RATE =  0.3977999985218048 (with noise std 20.0/255)
+Starting epoch  16
+FOOLING RATE =  0.4318000078201294 (with noise std 20.0/255)
+Starting epoch  17
+FOOLING RATE =  0.4553999900817871 (with noise std 20.0/255)
+Starting epoch  18
+FOOLING RATE =  0.47530001401901245 (with noise std 20.0/255)
+Starting epoch  19
+FOOLING RATE =  0.4986000061035156 (with noise std 20.0/255)
+>> Testing the universal perturbation on an image
+=== sgd_eot20_xi10_spiderweb : calcul de la perturbation (Tue Nov  3 11:51:24 AM CET 2026) ===
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+>> Targeted attack towards class 815 (spider web)
+Starting epoch  0
+FOOLING RATE =  0.23520000278949738 (with noise std 20.0/255)
+>> Images classified as the target: 0.007499999832361937
+Starting epoch  1
+FOOLING RATE =  0.33390000462532043 (with noise std 20.0/255)
+>> Images classified as the target: 0.1445000022649765
+Starting epoch  2
+FOOLING RATE =  0.3831000030040741 (with noise std 20.0/255)
+>> Images classified as the target: 0.2092999964952469
+Starting epoch  3
+FOOLING RATE =  0.39899998903274536 (with noise std 20.0/255)
+>> Images classified as the target: 0.2232999950647354
+Starting epoch  4
+FOOLING RATE =  0.40720000863075256 (with noise std 20.0/255)
+>> Images classified as the target: 0.23770000040531158
+Starting epoch  5
+FOOLING RATE =  0.41839998960494995 (with noise std 20.0/255)
+>> Images classified as the target: 0.25200000405311584
+Starting epoch  6
+FOOLING RATE =  0.41920000314712524 (with noise std 20.0/255)
+>> Images classified as the target: 0.25290000438690186
+Starting epoch  7
+FOOLING RATE =  0.4300000071525574 (with noise std 20.0/255)
+>> Images classified as the target: 0.26460000872612
+Starting epoch  8
+FOOLING RATE =  0.42489999532699585 (with noise std 20.0/255)
+>> Images classified as the target: 0.2623000144958496
+Starting epoch  9
+FOOLING RATE =  0.4352000057697296 (with noise std 20.0/255)
+>> Images classified as the target: 0.2720000147819519
+Starting epoch  10
+FOOLING RATE =  0.46880000829696655 (with noise std 20.0/255)
+>> Images classified as the target: 0.30640000104904175
+Starting epoch  11
+FOOLING RATE =  0.4772000014781952 (with noise std 20.0/255)
+>> Images classified as the target: 0.3172999918460846
+Starting epoch  12
+FOOLING RATE =  0.48500001430511475 (with noise std 20.0/255)
+>> Images classified as the target: 0.3237000107765198
+Starting epoch  13
+FOOLING RATE =  0.4957999885082245 (with noise std 20.0/255)
+>> Images classified as the target: 0.33629998564720154
+Starting epoch  14
+FOOLING RATE =  0.5084999799728394 (with noise std 20.0/255)
+>> Images classified as the target: 0.353300005197525
+Starting epoch  15
+FOOLING RATE =  0.531499981880188 (with noise std 20.0/255)
+>> Images classified as the target: 0.3815000057220459
+Starting epoch  16
+FOOLING RATE =  0.5397999882698059 (with noise std 20.0/255)
+>> Images classified as the target: 0.3889999985694885
+Starting epoch  17
+FOOLING RATE =  0.5436000227928162 (with noise std 20.0/255)
+>> Images classified as the target: 0.39169999957084656
+Starting epoch  18
+FOOLING RATE =  0.5418000221252441 (with noise std 20.0/255)
+>> Images classified as the target: 0.3955000042915344
+Starting epoch  19
+FOOLING RATE =  0.5407000184059143 (with noise std 20.0/255)
+>> Images classified as the target: 0.3968000113964081
+>> Testing the universal perturbation on an image
+=== sgd_eot20_xi16 : calcul de la perturbation (Tue Nov  3 12:29:12 PM CET 2026) ===
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+Starting epoch  0
+FOOLING RATE =  0.7842000126838684 (with noise std 20.0/255)
+Starting epoch  1
+FOOLING RATE =  0.8669000267982483 (with noise std 20.0/255)
+>> Testing the universal perturbation on an image
+=== sgd_eot20_xi24 : calcul de la perturbation (Tue Nov  3 12:33:12 PM CET 2026) ===
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+Starting epoch  0
+FOOLING RATE =  0.9840999841690063 (with noise std 20.0/255)
+>> Testing the universal perturbation on an image
+=== sgd_eot20_xi10 : évaluation sous la défense (Tue Nov  3 12:35:20 PM CET 2026) ===
+   batch 1 / 100   batch 2 / 100   batch 3 / 100   batch 4 / 100   batch 5 / 100   batch 6 / 100   batch 7 / 100   batch 8 / 100   batch 9 / 100   batch 10 / 100   batch 11 / 100   batch 12 / 100   batch 13 / 100   batch 14 / 100   batch 15 / 100   batch 16 / 100   batch 17 / 100   batch 18 / 100   batch 19 / 100   batch 20 / 100   batch 21 / 100   batch 22 / 100   batch 23 / 100   batch 24 / 100   batch 25 / 100   batch 26 / 100   batch 27 / 100   batch 28 / 100   batch 29 / 100   batch 30 / 100   batch 31 / 100   batch 32 / 100   batch 33 / 100   batch 34 / 100   batch 35 / 100   batch 36 / 100   batch 37 / 100   batch 38 / 100   batch 39 / 100   batch 40 / 100   batch 41 / 100   batch 42 / 100   batch 43 / 100   batch 44 / 100   batch 45 / 100   batch 46 / 100   batch 47 / 100   batch 48 / 100   batch 49 / 100   batch 50 / 100   batch 51 / 100   batch 52 / 100   batch 53 / 100   batch 54 / 100   batch 55 / 100   batch 56 / 100   batch 57 / 100   batch 58 / 100   batch 59 / 100   batch 60 / 100   batch 61 / 100   batch 62 / 100   batch 63 / 100   batch 64 / 100   batch 65 / 100   batch 66 / 100   batch 67 / 100   batch 68 / 100   batch 69 / 100   batch 70 / 100   batch 71 / 100   batch 72 / 100   batch 73 / 100   batch 74 / 100   batch 75 / 100   batch 76 / 100   batch 77 / 100   batch 78 / 100   batch 79 / 100   batch 80 / 100   batch 81 / 100   batch 82 / 100   batch 83 / 100   batch 84 / 100   batch 85 / 100   batch 86 / 100   batch 87 / 100   batch 88 / 100   batch 89 / 100   batch 90 / 100   batch 91 / 100   batch 92 / 100   batch 93 / 100   batch 94 / 100   batch 95 / 100   batch 96 / 100   batch 97 / 100   batch 98 / 100   batch 99 / 100   batch 100 / 100
+>> Model: resnet50, perturbation: results/eot_imagenet_resnet50/sgd_eot20_xi10.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: spider web
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  P = plancher de C : réponse différente entre deux tirages du bruit sur la photo normale (v = 0)
+  E = photos attaquées + bruit classées "spider web"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          P          D          E
+         0         80.8 %     45.7 %     50.8 %      0.0 %     50.8 %      7.5 %
+        10         77.8 %     46.7 %     48.8 %      7.0 %     49.9 %      2.5 %
+        20         71.4 %     48.9 %     44.6 %     12.3 %     47.8 %      0.2 %
+        40         52.0 %     48.5 %     31.7 %     28.3 %     48.6 %      0.1 %
+>> Results saved in results/eot_imagenet_resnet50/noise_sgd_eot20_xi10.txt
+=== sgd_eot20_xi10_spiderweb : évaluation sous la défense (Tue Nov  3 12:36:35 PM CET 2026) ===
+   batch 1 / 100   batch 2 / 100   batch 3 / 100   batch 4 / 100   batch 5 / 100   batch 6 / 100   batch 7 / 100   batch 8 / 100   batch 9 / 100   batch 10 / 100   batch 11 / 100   batch 12 / 100   batch 13 / 100   batch 14 / 100   batch 15 / 100   batch 16 / 100   batch 17 / 100   batch 18 / 100   batch 19 / 100   batch 20 / 100   batch 21 / 100   batch 22 / 100   batch 23 / 100   batch 24 / 100   batch 25 / 100   batch 26 / 100   batch 27 / 100   batch 28 / 100   batch 29 / 100   batch 30 / 100   batch 31 / 100   batch 32 / 100   batch 33 / 100   batch 34 / 100   batch 35 / 100   batch 36 / 100   batch 37 / 100   batch 38 / 100   batch 39 / 100   batch 40 / 100   batch 41 / 100   batch 42 / 100   batch 43 / 100   batch 44 / 100   batch 45 / 100   batch 46 / 100   batch 47 / 100   batch 48 / 100   batch 49 / 100   batch 50 / 100   batch 51 / 100   batch 52 / 100   batch 53 / 100   batch 54 / 100   batch 55 / 100   batch 56 / 100   batch 57 / 100   batch 58 / 100   batch 59 / 100   batch 60 / 100   batch 61 / 100   batch 62 / 100   batch 63 / 100   batch 64 / 100   batch 65 / 100   batch 66 / 100   batch 67 / 100   batch 68 / 100   batch 69 / 100   batch 70 / 100   batch 71 / 100   batch 72 / 100   batch 73 / 100   batch 74 / 100   batch 75 / 100   batch 76 / 100   batch 77 / 100   batch 78 / 100   batch 79 / 100   batch 80 / 100   batch 81 / 100   batch 82 / 100   batch 83 / 100   batch 84 / 100   batch 85 / 100   batch 86 / 100   batch 87 / 100   batch 88 / 100   batch 89 / 100   batch 90 / 100   batch 91 / 100   batch 92 / 100   batch 93 / 100   batch 94 / 100   batch 95 / 100   batch 96 / 100   batch 97 / 100   batch 98 / 100   batch 99 / 100   batch 100 / 100
+>> Model: resnet50, perturbation: results/eot_imagenet_resnet50/sgd_eot20_xi10_spiderweb.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: spider web
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  P = plancher de C : réponse différente entre deux tirages du bruit sur la photo normale (v = 0)
+  E = photos attaquées + bruit classées "spider web"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          P          D          E
+         0         80.8 %     19.6 %     78.7 %      0.0 %     78.7 %     75.7 %
+        10         77.8 %     22.5 %     75.0 %      7.0 %     75.4 %     70.9 %
+        20         71.4 %     42.7 %     49.9 %     12.3 %     53.7 %     38.8 %
+        40         52.0 %     48.6 %     32.4 %     28.3 %     48.5 %      0.2 %
+>> Results saved in results/eot_imagenet_resnet50/noise_sgd_eot20_xi10_spiderweb.txt
+=== sgd_eot20_xi16 : évaluation sous la défense (Tue Nov  3 12:37:50 PM CET 2026) ===
+   batch 1 / 100   batch 2 / 100   batch 3 / 100   batch 4 / 100   batch 5 / 100   batch 6 / 100   batch 7 / 100   batch 8 / 100   batch 9 / 100   batch 10 / 100   batch 11 / 100   batch 12 / 100   batch 13 / 100   batch 14 / 100   batch 15 / 100   batch 16 / 100   batch 17 / 100   batch 18 / 100   batch 19 / 100   batch 20 / 100   batch 21 / 100   batch 22 / 100   batch 23 / 100   batch 24 / 100   batch 25 / 100   batch 26 / 100   batch 27 / 100   batch 28 / 100   batch 29 / 100   batch 30 / 100   batch 31 / 100   batch 32 / 100   batch 33 / 100   batch 34 / 100   batch 35 / 100   batch 36 / 100   batch 37 / 100   batch 38 / 100   batch 39 / 100   batch 40 / 100   batch 41 / 100   batch 42 / 100   batch 43 / 100   batch 44 / 100   batch 45 / 100   batch 46 / 100   batch 47 / 100   batch 48 / 100   batch 49 / 100   batch 50 / 100   batch 51 / 100   batch 52 / 100   batch 53 / 100   batch 54 / 100   batch 55 / 100   batch 56 / 100   batch 57 / 100   batch 58 / 100   batch 59 / 100   batch 60 / 100   batch 61 / 100   batch 62 / 100   batch 63 / 100   batch 64 / 100   batch 65 / 100   batch 66 / 100   batch 67 / 100   batch 68 / 100   batch 69 / 100   batch 70 / 100   batch 71 / 100   batch 72 / 100   batch 73 / 100   batch 74 / 100   batch 75 / 100   batch 76 / 100   batch 77 / 100   batch 78 / 100   batch 79 / 100   batch 80 / 100   batch 81 / 100   batch 82 / 100   batch 83 / 100   batch 84 / 100   batch 85 / 100   batch 86 / 100   batch 87 / 100   batch 88 / 100   batch 89 / 100   batch 90 / 100   batch 91 / 100   batch 92 / 100   batch 93 / 100   batch 94 / 100   batch 95 / 100   batch 96 / 100   batch 97 / 100   batch 98 / 100   batch 99 / 100   batch 100 / 100
+>> Model: resnet50, perturbation: results/eot_imagenet_resnet50/sgd_eot20_xi16.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: guinea pig
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  P = plancher de C : réponse différente entre deux tirages du bruit sur la photo normale (v = 0)
+  E = photos attaquées + bruit classées "guinea pig"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          P          D          E
+         0         80.8 %      6.3 %     93.3 %      0.0 %     93.3 %     73.5 %
+        10         77.8 %      6.3 %     93.3 %      7.0 %     93.3 %     83.1 %
+        20         71.4 %     13.0 %     85.5 %     12.3 %     86.3 %     67.9 %
+        40         52.0 %     41.4 %     44.2 %     28.3 %     56.1 %      0.4 %
+>> Results saved in results/eot_imagenet_resnet50/noise_sgd_eot20_xi16.txt
+=== sgd_eot20_xi24 : évaluation sous la défense (Tue Nov  3 12:39:05 PM CET 2026) ===
+   batch 1 / 100   batch 2 / 100   batch 3 / 100   batch 4 / 100   batch 5 / 100   batch 6 / 100   batch 7 / 100   batch 8 / 100   batch 9 / 100   batch 10 / 100   batch 11 / 100   batch 12 / 100   batch 13 / 100   batch 14 / 100   batch 15 / 100   batch 16 / 100   batch 17 / 100   batch 18 / 100   batch 19 / 100   batch 20 / 100   batch 21 / 100   batch 22 / 100   batch 23 / 100   batch 24 / 100   batch 25 / 100   batch 26 / 100   batch 27 / 100   batch 28 / 100   batch 29 / 100   batch 30 / 100   batch 31 / 100   batch 32 / 100   batch 33 / 100   batch 34 / 100   batch 35 / 100   batch 36 / 100   batch 37 / 100   batch 38 / 100   batch 39 / 100   batch 40 / 100   batch 41 / 100   batch 42 / 100   batch 43 / 100   batch 44 / 100   batch 45 / 100   batch 46 / 100   batch 47 / 100   batch 48 / 100   batch 49 / 100   batch 50 / 100   batch 51 / 100   batch 52 / 100   batch 53 / 100   batch 54 / 100   batch 55 / 100   batch 56 / 100   batch 57 / 100   batch 58 / 100   batch 59 / 100   batch 60 / 100   batch 61 / 100   batch 62 / 100   batch 63 / 100   batch 64 / 100   batch 65 / 100   batch 66 / 100   batch 67 / 100   batch 68 / 100   batch 69 / 100   batch 70 / 100   batch 71 / 100   batch 72 / 100   batch 73 / 100   batch 74 / 100   batch 75 / 100   batch 76 / 100   batch 77 / 100   batch 78 / 100   batch 79 / 100   batch 80 / 100   batch 81 / 100   batch 82 / 100   batch 83 / 100   batch 84 / 100   batch 85 / 100   batch 86 / 100   batch 87 / 100   batch 88 / 100   batch 89 / 100   batch 90 / 100   batch 91 / 100   batch 92 / 100   batch 93 / 100   batch 94 / 100   batch 95 / 100   batch 96 / 100   batch 97 / 100   batch 98 / 100   batch 99 / 100   batch 100 / 100
+>> Model: resnet50, perturbation: results/eot_imagenet_resnet50/sgd_eot20_xi24.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: bluetick
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  P = plancher de C : réponse différente entre deux tirages du bruit sur la photo normale (v = 0)
+  E = photos attaquées + bruit classées "bluetick"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          P          D          E
+         0         80.8 %      0.8 %     99.2 %      0.0 %     99.2 %     70.2 %
+        10         77.8 %      0.8 %     99.1 %      7.0 %     99.2 %     17.6 %
+        20         71.4 %      1.4 %     98.3 %     12.3 %     98.4 %      1.1 %
+        40         52.0 %     26.6 %     66.1 %     28.3 %     72.0 %      0.1 %
+>> Results saved in results/eot_imagenet_resnet50/noise_sgd_eot20_xi24.txt
+=== sgd_xi10 : évaluation sous la défense (Tue Nov  3 12:40:20 PM CET 2026) ===
+   batch 1 / 100   batch 2 / 100   batch 3 / 100   batch 4 / 100   batch 5 / 100   batch 6 / 100   batch 7 / 100   batch 8 / 100   batch 9 / 100   batch 10 / 100   batch 11 / 100   batch 12 / 100   batch 13 / 100   batch 14 / 100   batch 15 / 100   batch 16 / 100   batch 17 / 100   batch 18 / 100   batch 19 / 100   batch 20 / 100   batch 21 / 100   batch 22 / 100   batch 23 / 100   batch 24 / 100   batch 25 / 100   batch 26 / 100   batch 27 / 100   batch 28 / 100   batch 29 / 100   batch 30 / 100   batch 31 / 100   batch 32 / 100   batch 33 / 100   batch 34 / 100   batch 35 / 100   batch 36 / 100   batch 37 / 100   batch 38 / 100   batch 39 / 100   batch 40 / 100   batch 41 / 100   batch 42 / 100   batch 43 / 100   batch 44 / 100   batch 45 / 100   batch 46 / 100   batch 47 / 100   batch 48 / 100   batch 49 / 100   batch 50 / 100   batch 51 / 100   batch 52 / 100   batch 53 / 100   batch 54 / 100   batch 55 / 100   batch 56 / 100   batch 57 / 100   batch 58 / 100   batch 59 / 100   batch 60 / 100   batch 61 / 100   batch 62 / 100   batch 63 / 100   batch 64 / 100   batch 65 / 100   batch 66 / 100   batch 67 / 100   batch 68 / 100   batch 69 / 100   batch 70 / 100   batch 71 / 100   batch 72 / 100   batch 73 / 100   batch 74 / 100   batch 75 / 100   batch 76 / 100   batch 77 / 100   batch 78 / 100   batch 79 / 100   batch 80 / 100   batch 81 / 100   batch 82 / 100   batch 83 / 100   batch 84 / 100   batch 85 / 100   batch 86 / 100   batch 87 / 100   batch 88 / 100   batch 89 / 100   batch 90 / 100   batch 91 / 100   batch 92 / 100   batch 93 / 100   batch 94 / 100   batch 95 / 100   batch 96 / 100   batch 97 / 100   batch 98 / 100   batch 99 / 100   batch 100 / 100
+>> Model: resnet50, perturbation: results/eot_imagenet_resnet50/sgd_xi10.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: paper towel
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  P = plancher de C : réponse différente entre deux tirages du bruit sur la photo normale (v = 0)
+  E = photos attaquées + bruit classées "paper towel"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          P          D          E
+         0         80.8 %     15.0 %     83.4 %      0.0 %     83.4 %     68.1 %
+        10         77.8 %     50.8 %     43.0 %      7.0 %     44.9 %     19.4 %
+        20         71.4 %     68.6 %     15.8 %     12.3 %     25.2 %      0.1 %
+        40         52.0 %     50.2 %     29.2 %     28.3 %     46.4 %      0.0 %
+>> Results saved in results/eot_imagenet_resnet50/noise_sgd_xi10.txt
+=== Terminé (Tue Nov  3 12:41:35 PM CET 2026) ===

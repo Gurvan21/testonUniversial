@@ -1,0 +1,16 @@
+>> Model: resnet50, perturbation: results/eot/resnet50_df.pt
+>> Images: data/imagenette2-320/val (1000 images)
+>> Dominant label of the perturbation: spider web
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  E = photos attaquées + bruit classées "spider web"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          D          E
+         0         85.1 %     64.4 %     32.5 %     32.5 %     26.2 %
+        10         85.2 %     83.8 %      6.6 %     13.1 %      0.0 %
+        20         78.7 %     79.3 %      9.6 %     19.0 %      0.0 %
+        40         57.6 %     55.6 %     26.8 %     42.5 %      0.0 %

@@ -1,0 +1,17 @@
+>> Model: vit_b_16, perturbation: results/imagenet_vit_b_16_10k/universal_vit_b_16.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: scoreboard
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  E = photos attaquées + bruit classées "scoreboard"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          D          E
+         0         80.8 %     26.5 %     71.3 %     71.3 %     69.4 %
+         5         80.7 %     30.2 %     66.9 %     67.1 %     64.4 %
+        10         79.5 %     45.4 %     49.8 %     50.4 %     44.7 %
+        20         76.2 %     68.9 %     21.4 %     24.3 %      7.4 %
+        40         67.4 %     64.8 %     22.9 %     29.2 %      0.2 %

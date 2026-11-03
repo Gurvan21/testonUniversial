@@ -1,0 +1,16 @@
+>> Model: resnet18, perturbation: data/universal_resnet18.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 11.05
+>> Validation images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval
+>> 40000 images
+
+                       précision   fooling rate
+  images propres          68.8 %         -
+  + v mélangé (témoin)    64.9 %       17.7 %
+  + pert. universelle     18.0 %       79.6 %
+
+>> Classes les plus prédites après perturbation :
+   brain coral                     18.4 % des images trompées
+   shower curtain                  15.7 % des images trompées
+   mask                             5.3 % des images trompées
+   peacock                          5.1 % des images trompées
+   tarantula                        2.7 % des images trompées

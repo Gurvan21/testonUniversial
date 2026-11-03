@@ -1,0 +1,6 @@
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+Starting epoch  0
+FOOLING RATE =  0.8495000004768372 
+>> Testing the universal perturbation on an image

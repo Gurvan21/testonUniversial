@@ -65,6 +65,10 @@ if __name__ == '__main__':
     parser.add_argument('--sgd_batch_size', type=int, default=32,
                         help='sgd: number of images per step (x eot_samples images on the GPU: lower it on small GPUs)')
     parser.add_argument('--step', type=float, default=None, help='sgd: step size on the [0, 255] scale (default xi / 10)')
+    parser.add_argument('--target', default=None,
+                        help='sgd: targeted attack towards this class (index or name, e.g. 815 or "spider web")')
+    parser.add_argument('--loss_clip', type=float, default=None,
+                        help='sgd: maximum of the per-image loss (Shafahi et al.), e.g. 5 (default: no clipping)')
     args = parser.parse_args()
 
     device = get_device()
@@ -108,11 +112,15 @@ if __name__ == '__main__':
                                        max_iter_uni=args.max_passes or float('inf'), checkpoint=file_checkpoint, noise_std=args.noise_std / 255,
                                        eot_samples=args.eot_samples)
         else:
+            target = None
+            if args.target is not None:
+                target = int(args.target) if args.target.isdigit() else labels.index(args.target)
+                print('>> Targeted attack towards class %d (%s)' % (target, labels[target]))
             v = universal_perturbation_sgd(X, model, delta=args.delta, xi=args.xi / 255, noise_std=args.noise_std / 255,
                                            eot_samples=args.eot_samples, epochs=args.epochs,
                                            batch_size=args.sgd_batch_size,
                                            step=None if args.step is None else args.step / 255,
-                                           checkpoint=file_checkpoint)
+                                           loss_clip=args.loss_clip, target=target, checkpoint=file_checkpoint)
 
         # Saving the universal perturbation; the checkpoint is no longer needed
         torch.save(v.cpu(), file_perturbation)

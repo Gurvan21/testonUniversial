@@ -1,0 +1,16 @@
+>> Model: convnext_base, perturbation: data/universal_convnext_base.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 10.30
+>> Validation images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval
+>> 40000 images
+
+                       précision   fooling rate
+  images propres          83.9 %         -
+  + v mélangé (témoin)    82.3 %        7.1 %
+  + pert. universelle     15.5 %       82.9 %
+
+>> Classes les plus prédites après perturbation :
+   brain coral                     97.6 % des images trompées
+   spider web                       0.2 % des images trompées
+   zebra                            0.2 % des images trompées
+   peacock                          0.1 % des images trompées
+   echidna                          0.0 % des images trompées

@@ -1,0 +1,9 @@
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+Starting epoch  0
+FOOLING RATE =  0.7842000126838684 (with noise std 20.0/255)
+Starting epoch  1
+FOOLING RATE =  0.8669000267982483 (with noise std 20.0/255)
+>> Testing the universal perturbation on an image

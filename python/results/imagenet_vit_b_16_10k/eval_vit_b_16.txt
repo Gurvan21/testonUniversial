@@ -1,0 +1,16 @@
+>> Model: vit_b_16, perturbation: data/universal_vit_b_16.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 11.85
+>> Validation images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval
+>> 40000 images
+
+                       précision   fooling rate
+  images propres          80.8 %         -
+  + v mélangé (témoin)    79.3 %        7.6 %
+  + pert. universelle     25.7 %       71.9 %
+
+>> Classes les plus prédites après perturbation :
+   scoreboard                      96.8 % des images trompées
+   prayer rug                       0.2 % des images trompées
+   grocery store                    0.0 % des images trompées
+   palace                           0.0 % des images trompées
+   mushroom                         0.0 % des images trompées

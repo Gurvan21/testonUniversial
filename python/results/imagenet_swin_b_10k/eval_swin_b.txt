@@ -1,0 +1,16 @@
+>> Model: swin_b, perturbation: data/universal_swin_b.pt
+>> Perturbation: l_inf = 10.00 / 255, l_2 = 9.21
+>> Validation images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval
+>> 40000 images
+
+                       précision   fooling rate
+  images propres          83.3 %         -
+  + v mélangé (témoin)    81.8 %        7.9 %
+  + pert. universelle     23.9 %       73.8 %
+
+>> Classes les plus prédites après perturbation :
+   brain coral                     97.8 % des images trompées
+   gong                             0.0 % des images trompées
+   coral reef                       0.0 % des images trompées
+   crayfish                         0.0 % des images trompées
+   peacock                          0.0 % des images trompées

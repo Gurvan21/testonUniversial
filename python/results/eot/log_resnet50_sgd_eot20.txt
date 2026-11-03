@@ -1,0 +1,27 @@
+>> Using device cuda
+>> Loading model resnet50
+>> Pre-processed imagenet data detected
+>> EOT against a Gaussian noise of std 20.0/255, 4 samples
+Starting epoch  0
+FOOLING RATE =  0.2240000069141388 (with noise std 20.0/255)
+Starting epoch  1
+FOOLING RATE =  0.23000000417232513 (with noise std 20.0/255)
+Starting epoch  2
+FOOLING RATE =  0.2199999988079071 (with noise std 20.0/255)
+Starting epoch  3
+FOOLING RATE =  0.2240000069141388 (with noise std 20.0/255)
+Starting epoch  4
+FOOLING RATE =  0.23399999737739563 (with noise std 20.0/255)
+Starting epoch  5
+FOOLING RATE =  0.2240000069141388 (with noise std 20.0/255)
+Starting epoch  6
+FOOLING RATE =  0.23199999332427979 (with noise std 20.0/255)
+Starting epoch  7
+FOOLING RATE =  0.23600000143051147 (with noise std 20.0/255)
+Starting epoch  8
+FOOLING RATE =  0.2280000001192093 (with noise std 20.0/255)
+Starting epoch  9
+FOOLING RATE =  0.23199999332427979 (with noise std 20.0/255)
+>> Testing the universal perturbation on an image
+/home/kemnhou/Bureau/universal/python/demo.py:150: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()

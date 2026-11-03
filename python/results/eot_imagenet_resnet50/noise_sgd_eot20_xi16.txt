@@ -1,0 +1,17 @@
+>> Model: resnet50, perturbation: results/eot_imagenet_resnet50/sgd_eot20_xi16.pt
+>> Images: /Data/gurvan.nkouathio-kemnhou/imagenet_val/eval (5000 images)
+>> Dominant label of the perturbation: guinea pig
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  P = plancher de C : réponse différente entre deux tirages du bruit sur la photo normale (v = 0)
+  E = photos attaquées + bruit classées "guinea pig"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          P          D          E
+         0         80.8 %      6.3 %     93.3 %      0.0 %     93.3 %     73.5 %
+        10         77.8 %      6.3 %     93.3 %      7.0 %     93.3 %     83.1 %
+        20         71.4 %     13.0 %     85.5 %     12.3 %     86.3 %     67.9 %
+        40         52.0 %     41.4 %     44.2 %     28.3 %     56.1 %      0.4 %

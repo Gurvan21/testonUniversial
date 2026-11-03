@@ -1,0 +1,16 @@
+>> Model: resnet50, perturbation: results/eot/resnet50_sgd_eot20.pt
+>> Images: data/imagenette2-320/val (1000 images)
+>> Dominant label of the perturbation: church
+
+Colonnes (en % des images) :
+  A = photos normales + bruit, bien reconnues        (coût de la défense : doit rester haut)
+  B = photos attaquées + bruit, bien reconnues       (efficacité : doit remonter vers A)
+  C = réponse différente entre normale+bruit et attaquée+bruit  (fooling rate)
+  D = réponse différente entre normale sans bruit et attaquée+bruit
+  E = photos attaquées + bruit classées "church"   (la classe dominante est-elle encore vue ?)
+
+  bruit σ (/255)      A          B          C          D          E
+         0         85.1 %     84.5 %     10.2 %     10.2 %      6.4 %
+        10         85.2 %     82.8 %      6.8 %     13.0 %      6.3 %
+        20         78.7 %     78.4 %      9.7 %     19.5 %      5.4 %
+        40         57.6 %     55.2 %     27.7 %     42.7 %      3.6 %
